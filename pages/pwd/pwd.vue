@@ -3,7 +3,8 @@
 		<view class="input-group">
 			<view class="input-row">
 				<text class="title">邮箱：</text>
-				<m-input type="text" focus clearable v-model="email" placeholder="请输入邮箱"></m-input>
+				<!-- <m-input type="text" focus clearable v-model="email" placeholder="请输入邮箱"></m-input> -->
+				<uni-easyinput type="text" focus clearable v-model="email" placeholder="请输入邮箱"></uni-easyinput>
 			</view>
 		</view>
 
@@ -14,12 +15,12 @@
 </template>
 
 <script>
-	import mInput from '../../components/m-input.vue';
+	// import mInput from '../../components/m-input.vue';
 
 	export default {
-		components: {
-			mInput
-		},
+		// components: {
+		// 	mInput
+		// },
 		data() {
 			return {
 				email: ''

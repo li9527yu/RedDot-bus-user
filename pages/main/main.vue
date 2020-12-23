@@ -1,27 +1,13 @@
 <template>
 	<view class="content">
-		<person></person>
-		<!-- <view class="order">
-			<form @submit="">
-				<view class="uni-list">
-					<view class="uni-list-cell">
-						<view class="uni-list-cell-db">
-							<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
-								<view class="uni-input"><text>当前选择日期为：</text>{{date}}</view>
-							</picker>
-						</view>
-					</view>
-				</view>
-				<navigator  url="../show-map/ShowMap">
-					<input type="text" focus  placeholder="输入起点"  />
-				</navigator>
-				<navigator url="../show-map/ShowMap">
-					<input type="text" focus  placeholder="输入终点"  />
-				</navigator>			
-			<button form-type="submit">下单</button>
-				
-			</form>
-		</view> -->
+		<view class="end-title">
+		     <view v-for="(item,index) in items" :key="index" :class="{btna:count == index}" @tap="change(index)">
+		       <span class="item-title">{{item}}</span>
+		    </view>
+		</view>
+		<view class="end-cont" :class="{ dis: btnnum == 0 }"><person></person></view>
+		<view class="end-cont" :class="{ dis: btnnum == 1 }"><enterprise></enterprise></view>
+<!-- 		<view class="end-cont" :class="{ dis: btnnum == 2 }"><child3></child3></view> -->
 	</view>
 </template>
 
@@ -38,23 +24,13 @@
 			Person,
 			Enterprise
 		},
-		// data() {
-		//         const currentDate = this.getDate({
-		//             format: true
-		//         })
-		//         return {
-		//             date: currentDate
-		//         }
-		//     },
-		// computed: {
-		// 	// mapState(['forcedLogin', 'hasLogin', 'userName']),
-		// 	startDate() {
-		// 	    return this.getDate('start');
-		// 	},
-		// 	endDate() {
-		// 	    return this.getDate('end');
-		// 	}
-		// },
+		data(){
+			return {
+			      btnnum: 0,
+			      items:["个人乘车","企业乘车","其他方式"],
+			      count:"",
+			  }
+		},
 		onLoad() {
 			const loginType = uni.getStorageSync('login_type')
 			if (loginType === 'local') {
@@ -126,29 +102,13 @@
 					}
 				});
 			},
-		// 	getDate(type) {
-		// 	            const date = new Date();
-		// 	            let year = date.getFullYear();
-		// 	            let month = date.getMonth() + 1;
-		// 	            let day = date.getDate();
-			
-		// 	            if (type === 'start') {
-		// 	                year = year;
-		// 	            } else if (type === 'end') {
-		// 	                year = year;
-		// 	            }
-		// 	            month = month > 9 ? month : '0' + month;;
-		// 	            day = day > 9 ? day : '0' + day;
-		// 	            return `${year}-${month}-${day}`;
-		// 	        },
-		// bindDateChange: function(e) {
-		// 	this.date = e.target.value
-		// },
-		// ShowMap(){
-		// 	this.$router.push('/page/show-map/ShowMap');
-		// }
-		}
+			change(e) {
+			     this.count = e
+			     this.btnnum = e
+			     console.log(this.count)
+			  }
 
+	},
 	}
 </script>
 
@@ -173,4 +133,37 @@
 	.ul>view {
 		line-height: 25px;
 	}
+	.item-title{
+		font-size: 16px;
+		/* font-weight: 400; */
+
+		
+	}
+	.content{
+		padding: 0;
+		margin: 0;
+		background-color: #FFFFFF;
+	}
+	.end-title{
+	        display: flex;
+			margin: 10px 0px  0px;
+			
+	    }
+	.end-title view{
+		flex-grow: 1;
+		text-align: center;
+	}
+	.end-cont{
+		display: none;
+		margin-top:10px ;
+	}
+	.btna{
+		font-weight: 600;
+		padding-bottom: 5px;
+		border-bottom: 2px #007AFF solid;
+	}
+	.dis{
+		display: block;
+	}
+	
 </style>

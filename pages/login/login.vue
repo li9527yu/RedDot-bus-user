@@ -7,22 +7,26 @@
 		<view class="input-group" v-if="loginType === 0">
 			<view class="input-row border">
 				<text class="title">手机：</text>
-				<m-input class="m-input" type="text" clearable focus v-model="mobile" placeholder="请输入手机号码"></m-input>
+				<uni-easyinput class="m-input" type="text" clearable focus v-model="mobile" placeholder="请输入手机号码" :inputBorder="false"></uni-easyinput>
+				<!-- <m-input class="m-input" type="text" clearable focus v-model="mobile" placeholder="请输入手机号码"></m-input> -->
 			</view>
 			<view class="input-row">
 				<text class="title">验证码：</text>
-				<m-input type="text" v-model="code" placeholder="请输入验证码"></m-input>
+				<!-- <m-input type="text" v-model="code" placeholder="请输入验证码"></m-input> -->
+				<uni-easyinput type="text" v-model="code" placeholder="请输入验证码" :inputBorder="false"></uni-easyinput>
 				<view class="send-code-btn" @click="sendSmsCode">{{codeDuration ? codeDuration + 's' : '发送验证码' }}</view>
 			</view>
 		</view>
 		<view class="input-group" v-else>
 			<view class="input-row border">
 				<text class="title">账号：</text>
-				<m-input class="m-input" type="text" clearable focus v-model="username" placeholder="请输入账号"></m-input>
+				<!-- <m-input class="m-input" type="text" clearable focus v-model="username" placeholder="请输入账号"></m-input> -->
+				<uni-easyinput class="m-input" type="text" clearable focus v-model="username" placeholder="请输入账号" :inputBorder="false"></uni-easyinput>
 			</view>
 			<view class="input-row">
 				<text class="title">密码：</text>
-				<m-input type="password" displayable v-model="password" placeholder="请输入密码"></m-input>
+				<!-- <m-input type="password" displayable v-model="password" placeholder="请输入密码"></m-input> -->
+				<uni-easyinput type="password" displayable v-model="password" placeholder="请输入密码" :inputBorder="false"></uni-easyinput>
 			</view>
 		</view>
 		<view class="btn-row">
@@ -31,14 +35,14 @@
 		<view class="action-row">
 			<navigator url="../reg/reg">注册账号</navigator>
 		</view>
-		<view class="oauth-row" v-if="hasProvider" v-bind:style="{top: positionTop + 'px'}">
+		<!-- <view class="oauth-row" v-if="hasProvider" v-bind:style="{top: positionTop + 'px'}">
 			<view class="oauth-image" v-for="provider in providerList" :key="provider.value">
-				<image :src="provider.image" @tap="loginByWeixin(provider.value)"></image>
+				<image :src="provider.image" @tap="loginByWeixin(provider.value)"></image> -->
 				<!-- #ifdef MP-WEIXIN -->
-				<button v-if="!isDevtools" open-type="getUserInfo" @getuserinfo="getUserInfo"></button>
+				<!-- <button v-if="!isDevtools" open-type="getUserInfo" @getuserinfo="getUserInfo"></button> -->
 				<!-- #endif -->
-			</view>
-		</view>
+			<!-- </view> -->
+		<!-- </view> -->
 	</view>
 </template>
 
@@ -47,13 +51,13 @@
 		mapState,
 		mapMutations
 	} from 'vuex'
-	import mInput from '../../components/m-input.vue'
+	// import mInput from '../../components/m-input.vue'
 
 	let weixinAuthService
 	export default {
-		components: {
-			mInput
-		},
+	// 	components: {
+	// 		mInput
+	// 	},
 		data() {
 			return {
 				loginType: 0,
@@ -72,20 +76,21 @@
 		computed: mapState(['forcedLogin']),
 		onLoad() {
 			// #ifdef APP-PLUS
-			plus.oauth.getServices((services) => {
-				weixinAuthService = services.find((service) => {
-					return service.id === 'weixin'
-				})
-				if (weixinAuthService) {
-					this.hasWeixinAuth = true
-				}
-			});
+			// plus.oauth.getServices((services) => {
+			// 	weixinAuthService = services.find((service) => {
+			// 		return service.id === 'weixin'
+			// 	})
+			// 	if (weixinAuthService) {
+			// 		this.hasWeixinAuth = true
+			// 	}
+			// });
 			// #endif
 		},
 		methods: {
 			...mapMutations(['login']),
 			initProvider() {
 				const filters = ['weixin', 'qq', 'sinaweibo'];
+				// 获取服务供应商
 				uni.getProvider({
 					service: 'oauth',
 					success: (res) => {
@@ -113,6 +118,8 @@
 				 */
 				this.positionTop = uni.getSystemInfoSync().windowHeight - 100;
 			},
+			
+			// 发送手机验证码
 			sendSmsCode() {
 				if (this.codeDuration) {
 					uni.showModal({
@@ -127,45 +134,45 @@
 					})
 					return
 				}
-				uniCloud.callFunction({
-					name: 'user-center',
-					data: {
-						action: 'sendSmsCode',
-						params: {
-							mobile: this.mobile
-						}
-					},
-					success: (e) => {
-						if (e.result.code == 0) {
-							uni.showModal({
-								content: '验证码发送成功，请注意查收',
-								showCancel: false
-							})
-							this.codeDuration = 60
-							this.codeInterVal = setInterval(() => {
-								this.codeDuration--
-								if (this.codeDuration === 0) {
-									if (this.codeInterVal) {
-										clearInterval(this.codeInterVal)
-										this.codeInterVal = null
-									}
-								}
-							}, 1000)
-						} else {
-							uni.showModal({
-								content: '验证码发送失败：' + e.result.msg,
-								showCancel: false
-							})
-						}
+				// uniCloud.callFunction({
+				// 	name: 'user-center',
+				// 	data: {
+				// 		action: 'sendSmsCode',
+				// 		params: {
+				// 			mobile: this.mobile
+				// 		}
+				// 	},
+				// 	success: (e) => {
+				// 		if (e.result.code == 0) {
+				// 			uni.showModal({
+				// 				content: '验证码发送成功，请注意查收',
+				// 				showCancel: false
+				// 			})
+				// 			this.codeDuration = 60
+				// 			this.codeInterVal = setInterval(() => {
+				// 				this.codeDuration--
+				// 				if (this.codeDuration === 0) {
+				// 					if (this.codeInterVal) {
+				// 						clearInterval(this.codeInterVal)
+				// 						this.codeInterVal = null
+				// 					}
+				// 				}
+				// 			}, 1000)
+				// 		} else {
+				// 			uni.showModal({
+				// 				content: '验证码发送失败：' + e.result.msg,
+				// 				showCancel: false
+				// 			})
+				// 		}
 
-					},
-					fail(e) {
-						uni.showModal({
-							content: '验证码发送失败',
-							showCancel: false
-						})
-					}
-				})
+				// 	},
+				// 	fail(e) {
+				// 		uni.showModal({
+				// 			content: '验证码发送失败',
+				// 			showCancel: false
+				// 		})
+				// 	}
+				// })
 			},
 			loginByPwd() {
 				/**
@@ -192,37 +199,37 @@
 				};
 				let _self = this;
 
-				uniCloud.callFunction({
-					name: 'user-center',
-					data: {
-						action: 'login',
-						params: data
-					},
-					success: (e) => {
+				// uniCloud.callFunction({
+				// 	name: 'user-center',
+				// 	data: {
+				// 		action: 'login',
+				// 		params: data
+				// 	},
+				// 	success: (e) => {
 
-						console.log('login success', e);
+				// 		console.log('login success', e);
 
-						if (e.result.code == 0) {
-							uni.setStorageSync('uniIdToken', e.result.token)
-							uni.setStorageSync('username', e.result.username)
-							uni.setStorageSync('login_type', 'online')
-							_self.toMain(_self.username);
-						} else {
-							uni.showModal({
-								content: e.result.msg,
-								showCancel: false
-							})
-							console.log('登录失败', e);
-						}
+				// 		if (e.result.code == 0) {
+				// 			uni.setStorageSync('uniIdToken', e.result.token)
+				// 			uni.setStorageSync('username', e.result.username)
+				// 			uni.setStorageSync('login_type', 'online')
+				// 			_self.toMain(_self.username);
+				// 		} else {
+				// 			uni.showModal({
+				// 				content: e.result.msg,
+				// 				showCancel: false
+				// 			})
+				// 			console.log('登录失败', e);
+				// 		}
 
-					},
-					fail(e) {
-						uni.showModal({
-							content: JSON.stringify(e),
-							showCancel: false
-						})
-					}
-				})
+				// 	},
+				// 	fail(e) {
+				// 		uni.showModal({
+				// 			content: JSON.stringify(e),
+				// 			showCancel: false
+				// 		})
+				// 	}
+				// })
 			},
 			loginBySms() {
 				if (!/^1\d{10}$/.test(this.mobile)) {
@@ -241,41 +248,41 @@
 				}
 				let _self = this;
 
-				uniCloud.callFunction({
-					name: 'user-center',
-					data: {
-						action: 'loginBySms',
-						params: {
-							mobile: this.mobile,
-							code: this.code
-						}
-					},
-					success: (e) => {
+				// uniCloud.callFunction({
+				// 	name: 'user-center',
+				// 	data: {
+				// 		action: 'loginBySms',
+				// 		params: {
+				// 			mobile: this.mobile,
+				// 			code: this.code
+				// 		}
+				// 	},
+				// 	success: (e) => {
 
-						console.log('login success', e);
+				// 		console.log('login success', e);
 
-						if (e.result.code == 0) {
-							const username = e.result.username || '新用户'
-							uni.setStorageSync('uniIdToken', e.result.token)
-							uni.setStorageSync('username', username)
-							uni.setStorageSync('login_type', 'online')
-							_self.toMain(username);
-						} else {
-							uni.showModal({
-								content: e.result.msg,
-								showCancel: false
-							})
-							console.log('登录失败', e);
-						}
+				// 		if (e.result.code == 0) {
+				// 			const username = e.result.username || '新用户'
+				// 			uni.setStorageSync('uniIdToken', e.result.token)
+				// 			uni.setStorageSync('username', username)
+				// 			uni.setStorageSync('login_type', 'online')
+				// 			_self.toMain(username);
+				// 		} else {
+				// 			uni.showModal({
+				// 				content: e.result.msg,
+				// 				showCancel: false
+				// 			})
+				// 			console.log('登录失败', e);
+				// 		}
 
-					},
-					fail(e) {
-						uni.showModal({
-							content: JSON.stringify(e),
-							showCancel: false
-						})
-					}
-				})
+				// 	},
+				// 	fail(e) {
+				// 		uni.showModal({
+				// 			content: JSON.stringify(e),
+				// 			showCancel: false
+				// 		})
+				// 	}
+				// })
 			},
 			bindLogin() {
 				switch (this.loginType) {
@@ -379,39 +386,40 @@
 				}
 
 			},
-			loginByWeixin(value) {
-				this.oauth(value).then((code) => {
-					return uniCloud.callFunction({
-						name: 'user-center',
-						data: {
-							action: 'loginByWeixin',
-							params: {
-								code,
-							}
-						}
-					})
-				}).then((res) => {
-					if (res.result.code === 0) {
-						this.toMain('微信用户')
-						uni.setStorageSync('uni_id_token', res.result.token)
-						uni.setStorageSync('uni_id_token_expired', res.result.tokenExpired)
-					}
-				}).catch((e) => {
-					console.error(e)
-					uni.showModal({
-						showCancel: false,
-						content: '微信登录失败，请稍后再试'
-					})
-				})
-			},
-		},
-		onReady() {
-			this.initPosition();
-			this.initProvider();
-			// #ifdef MP-WEIXIN
-			this.isDevtools = uni.getSystemInfoSync().platform === 'devtools';
-			// #endif
-		}
+		// 	loginByWeixin(value) {
+		// 		this.oauth(value).then((code) => {
+		// 			return uniCloud.callFunction({
+		// 				name: 'user-center',
+		// 				data: {
+		// 					action: 'loginByWeixin',
+		// 					params: {
+		// 						code,
+		// 					}
+		// 				}
+		// 			})
+		// 		}).then((res) => {
+		// 			if (res.result.code === 0) {
+		// 				this.toMain('微信用户')
+		// 				uni.setStorageSync('uni_id_token', res.result.token)
+		// 				uni.setStorageSync('uni_id_token_expired', res.result.tokenExpired)
+		// 			}
+		// 		}).catch((e) => {
+		// 			console.error(e)
+		// 			uni.showModal({
+		// 				showCancel: false,
+		// 				content: '微信登录失败，请稍后再试'
+		// 			})
+		// 		})
+		// 	},
+		// },
+		// onReady() {
+		// 	this.initPosition();
+		// 	this.initProvider();
+		// 	// #ifdef MP-WEIXIN
+		// 	this.isDevtools = uni.getSystemInfoSync().platform === 'devtools';
+		// 	// #endif
+		// }
+	},
 	}
 </script>
 

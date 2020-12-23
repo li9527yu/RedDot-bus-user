@@ -74,7 +74,23 @@
                 
             }
             
-        }
+        },
+		{
+		    "path" : "pages/payment/payment",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "确认支付"
+		        
+		    }
+		    
+		},
+		{
+			"path":"pages/person-ride/person",
+			"style":
+			{
+				"navigationBarTitleText":"个人乘车"
+			}
+		}
     ],
 	"tabBar": {
 		"color": "#7a7e83",

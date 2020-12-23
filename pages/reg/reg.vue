@@ -3,15 +3,18 @@
 		<view class="input-group">
 			<view class="input-row border">
 				<text class="title">账号：</text>
-				<m-input type="text" focus clearable v-model="username" placeholder="请输入账号"></m-input>
+				<!-- <m-input type="text" focus clearable v-model="username" placeholder="请输入账号"></m-input> -->
+				<uni-easyinput focus clearable v-model="username" placeholder="请输入账号" :inputBorder="false"></uni-easyinput>
 			</view>
 			<view class="input-row border">
 				<text class="title">密码：</text>
-				<m-input type="password" displayable v-model="password" placeholder="请输入密码"></m-input>
+				<!-- <m-input type="password" displayable v-model="password" placeholder="请输入密码"></m-input> -->
+				<uni-easyinput type="password" displayable v-model="password" placeholder="请输入密码" :inputBorder="false"></uni-easyinput>
 			</view>
 			<view class="input-row">
 				<text class="title">确认密码：</text>
-				<m-input type="password" displayable v-model="confirmPassword" placeholder="请确认密码"></m-input>
+				<!-- <m-input type="password" displayable v-model="confirmPassword" placeholder="请确认密码"></m-input> -->
+				<uni-easyinput type="password" displayable v-model="confirmPassword" placeholder="请确认密码" :inputBorder="false"></uni-easyinput>
 			</view>
 		</view>
 		<view class="btn-row">
@@ -21,12 +24,12 @@
 </template>
 
 <script>
-	import mInput from '../../components/m-input.vue';
+	// import mInput from '../../components/m-input.vue';
 
 	export default {
-		components: {
-			mInput
-		},
+		// components: {
+		// 	mInput
+		// },
 		data() {
 			return {
 				username: '',
@@ -62,44 +65,67 @@
 					return;
 				}
 
-				const data = {
+				const rdata = {
 					username: this.username,
 					password: this.password
 				}
-				uniCloud.callFunction({
-					name: 'user-center',
-					data: {
-						action: 'register',
-						params: data
-					},
-					success(e) {
-						console.log("注册成功", e);
-
-						if (e.result.code === 0) {
-							uni.showToast({
-								title: '注册成功'
-							});
-							uni.setStorageSync('uniIdToken', e.result.token)
-							uni.setStorageSync('username', e.result.username)
-							uni.reLaunch({
-								url: '../main/main',
-							});
-						} else {
-							uni.showModal({
-								content: JSON.stringify(e.result),
-								showCancel: false
-							})
-						}
-					},
-					fail(e) {
-						uni.showModal({
-							content: JSON.stringify(e),
-							showCancel: false
+				console.log(rdata)
+				uni.request({
+					url:'',
+					data:rdata,
+					success: (res) => {
+						// console.log("注册成功")
+						uni.showToast({
+							title: '注册成功'
+						});
+						console.log(res.data)
+						// 获得token，以及username并存储在localstorage
+						// uni.setStorageSync('uniIdToken', )
+						// uni.setStorageSync('username', )
+						uni.reLaunch({
+							url:'../main/main'
 						})
+						
+					},
+					fail: (err) => {
+						
 					}
 				})
-			}
+			// 	uniCloud.callFunction({
+			// 		name: 'user-center',
+			// 		data: {
+			// 			action: 'register',
+			// 			params: data
+			// 		},
+			// 		success(e) {
+			// 			console.log("注册成功", e);
+
+			// 			if (e.result.code === 0) {
+			// 				uni.showToast({
+			// 					title: '注册成功'
+			// 				});
+			// 				uni.setStorageSync('uniIdToken', e.result.token)
+			// 				uni.setStorageSync('username', e.result.username)
+			// 				uni.reLaunch({
+			// 					url: '../main/main',
+			// 				});
+			// 			} else {
+			// 				uni.showModal({
+			// 					content: JSON.stringify(e.result),
+			// 					showCancel: false
+			// 				})
+			// 			}
+			// 		},
+			// 		fail(e) {
+			// 			uni.showModal({
+			// 				content: JSON.stringify(e),
+			// 				showCancel: false
+			// 			})
+			// 		}
+			// 	})
+			// }
 		}
+	},
 	}
 </script>
 

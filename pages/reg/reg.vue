@@ -2,9 +2,15 @@
 	<view class="content">
 		<view class="input-group">
 			<view class="input-row border">
-				<text class="title">账号：</text>
+				<text class="title">手机号：</text>
 				<!-- <m-input type="text" focus clearable v-model="username" placeholder="请输入账号"></m-input> -->
-				<uni-easyinput focus clearable v-model="username" placeholder="请输入账号" :inputBorder="false"></uni-easyinput>
+				<uni-easyinput focus clearable v-model="phone" placeholder="请输入手机号" :inputBorder="false"></uni-easyinput>
+			</view>
+			<view class="input-row border">
+				<text class="title">验证码：</text>
+				<!-- <m-input type="text" focus clearable v-model="username" placeholder="请输入账号"></m-input> -->
+				<uni-easyinput focus clearable  placeholder="请输入验证码" :inputBorder="false"></uni-easyinput>
+				<button type="default" @click="sendCode">发送验证码</button>
 			</view>
 			<view class="input-row border">
 				<text class="title">密码：</text>
@@ -32,18 +38,32 @@
 		// },
 		data() {
 			return {
-				username: '',
+				phone: '',
 				password: '',
+				sms_code:'',
 				confirmPassword: ''
 			}
 		},
 		methods: {
+			sendCode(){
+				console.log(this.phone)
+				uni.request({
+					url:'',
+					data:{
+						
+					},
+					method:'POST',
+					success: (res) => {
+						
+					}
+				})
+			},
 			register() {
 				/**
 				 * 客户端对账号信息进行一些必要的校验。
 				 * 实际开发中，根据业务需要进行处理，这里仅做示例。
 				 */
-				if (this.username.length < 3) {
+				if (this.phone.length < 3) {
 					uni.showToast({
 						icon: 'none',
 						title: '账号最短为 3 个字符'
@@ -66,7 +86,7 @@
 				}
 
 				const rdata = {
-					username: this.username,
+					phone: this.phone,
 					password: this.password
 				}
 				console.log(rdata)
@@ -130,5 +150,9 @@
 </script>
 
 <style>
-
+#send_sms{
+	background-color: #0faeff;
+	color: #0faeff;
+	
+}
 </style>

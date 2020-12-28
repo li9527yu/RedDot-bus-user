@@ -136,17 +136,17 @@
                 },
                 // 位置授权
                  getAuthorizeInfo(){
-                              uni.authorize({
-                                  scope: 'scope.userLocation',
-                                  success() { // 允许授权
+           //                    uni.authorize({
+           //                        scope: 'scope.userLocation',
+           //                        success() { // 允许授权
                                       self.getLocationInfo();
-									  console.log("success")
-                                  },
-                                  fail(){    // 拒绝授权
-                                      self.openConfirm();
-                                      console.log("你拒绝了授权，无法获得周边信息")
-                                  }
-                              })
+									  // console.log("success")
+           //                        },
+           //                        fail(){    // 拒绝授权
+           //                            self.openConfirm();
+           //                            console.log("你拒绝了授权，无法获得周边信息")
+           //                        }
+           //                    })
                           },
                           // 获取地理位置
                 getLocationInfo(){  

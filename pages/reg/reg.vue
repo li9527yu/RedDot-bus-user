@@ -9,7 +9,7 @@
 			<view class="input-row border">
 				<text class="title">验证码：</text>
 				<!-- <m-input type="text" focus clearable v-model="username" placeholder="请输入账号"></m-input> -->
-				<uni-easyinput focus clearable  placeholder="请输入验证码" :inputBorder="false"></uni-easyinput>
+				<uni-easyinput focus clearable v-model="sms_code" placeholder="请输入验证码" :inputBorder="false"></uni-easyinput>
 				<button type="default" @click="sendCode">发送验证码</button>
 			</view>
 			<view class="input-row border">
@@ -48,13 +48,13 @@
 			sendCode(){
 				console.log(this.phone)
 				uni.request({
-					url:'',
-					data:{
-						
-					},
+					url:'http://mrbus.net:8888/api/user/smsCode'+'?phone='+this.phone,
 					method:'POST',
 					success: (res) => {
-						
+						console.log(res)
+						uni.showToast({
+							title: "发送成功"
+						})
 					}
 				})
 			},
@@ -91,8 +91,16 @@
 				}
 				console.log(rdata)
 				uni.request({
-					url:'',
-					data:rdata,
+					url:'http://mrbus.net:8888/api/user/register',
+					method: 'POST',
+					header: {
+						"content-type": "application/json "
+					},
+					data: {
+						  password: this.password,
+						  phone: this.phone,
+						  sms_code: this.sms_code
+					},
 					success: (res) => {
 						// console.log("注册成功")
 						uni.showToast({
@@ -102,48 +110,17 @@
 						// 获得token，以及username并存储在localstorage
 						// uni.setStorageSync('uniIdToken', )
 						// uni.setStorageSync('username', )
-						uni.reLaunch({
-							url:'../main/main'
-						})
+						// uni.reLaunch({
+						// 	url:'../main/main'
+						// })
 						
 					},
 					fail: (err) => {
-						
+						uni.showToast({
+							title: '注册失败'
+						});
 					}
 				})
-			// 	uniCloud.callFunction({
-			// 		name: 'user-center',
-			// 		data: {
-			// 			action: 'register',
-			// 			params: data
-			// 		},
-			// 		success(e) {
-			// 			console.log("注册成功", e);
-
-			// 			if (e.result.code === 0) {
-			// 				uni.showToast({
-			// 					title: '注册成功'
-			// 				});
-			// 				uni.setStorageSync('uniIdToken', e.result.token)
-			// 				uni.setStorageSync('username', e.result.username)
-			// 				uni.reLaunch({
-			// 					url: '../main/main',
-			// 				});
-			// 			} else {
-			// 				uni.showModal({
-			// 					content: JSON.stringify(e.result),
-			// 					showCancel: false
-			// 				})
-			// 			}
-			// 		},
-			// 		fail(e) {
-			// 			uni.showModal({
-			// 				content: JSON.stringify(e),
-			// 				showCancel: false
-			// 			})
-			// 		}
-			// 	})
-			// }
 		}
 	},
 	}

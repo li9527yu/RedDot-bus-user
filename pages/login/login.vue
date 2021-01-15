@@ -75,12 +75,12 @@
 							uni.showToast({
 								title:'登录成功'
 							})
-							
+							// console.log(res.data.data.token)
 							// uni.setStorageSync('user_token', res.token)
 							// uni.setStorageSync('username', this.phone)
 							this.$store.commit('login',{
 								userName:this.phone,
-								token:res.token
+								token:res.data.data.token
 							})
 							uni.reLaunch({
 								// url:'../main/main'

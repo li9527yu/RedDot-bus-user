@@ -15,6 +15,8 @@ const store = new Vuex.Store({
 	},
 	mutations: {
 		login(state, user) {
+			uni.setStorageSync('user_token',user.token)
+			uni.setStorageSync('username', user.userName)
 			state.userName = user.userName || '新用户';
 			state.usertoken=user.token;
 			state.hasLogin = true;

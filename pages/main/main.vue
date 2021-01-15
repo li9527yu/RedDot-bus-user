@@ -31,51 +31,23 @@
 			      count:"",
 			  }
 		},
+		// computed:{
+		// 	getToken(){
+		// 		return this.$store.state.usertoken
+		// 	}
+		// },
 		onLoad() {
-			const loginType = uni.getStorageSync('login_type')
-			if (loginType === 'local') {
-				this.login(uni.getStorageSync('username'))
-				return
-			}
-			let uniIdToken = uni.getStorageSync('uniIdToken')
-			if (uniIdToken) {
-				// this.login(uni.getStorageSync('username'))
-				// uniCloud.callFunction({
-				// 	name: 'user-center',
-				// 	data: {
-				// 		action: 'checkToken',
-				// 	},
-				// 	success: (e) => {
-
-				// 		console.log('checkToken success', e);
-
-				// 		if (e.result.code > 0) {
-				// 			//token过期或token不合法，重新登录
-				// 			if (this.forcedLogin) {
-				// 				uni.reLaunch({
-				// 					url: '../login/login'
-				// 				});
-				// 			} else {
-				// 				uni.navigateTo({
-				// 					url: '../login/login'
-				// 				});
-				// 			}
-				// 		}
-				// 	},
-				// 	fail(e) {
-				// 		uni.showModal({
-				// 			content: JSON.stringify(e),
-				// 			showCancel: false
-				// 		})
-				// 	}
-				// })
+			let user_token=this.$store.state.usertoken
+			if (user_token) {
+				
 			} else {
 				this.guideToLogin()
 			}
+			console.log(this.$store.state.usertoken)
 		},
 		
 		methods: {
-			...mapMutations(['login']),
+			// ...mapMutations(['login']),
 			guideToLogin() {
 				uni.showModal({
 					title: '未登录',

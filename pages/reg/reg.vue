@@ -44,11 +44,7 @@
 				confirmPassword: ''
 			}
 		},
-<<<<<<< HEAD
-		methods:{
-=======
 		methods: {
->>>>>>> 9b0e9ff1bd326e1b4ef54eb8af2d923b27dea173
 			sendCode(){
 				console.log(this.phone)
 				uni.request({
@@ -56,40 +52,24 @@
 					method:'POST',
 					success: (res) => {
 						console.log(res)
+						if(res.statusCode==200){
+							uni.showToast({
+								title:'发送成功'
+							})
+						}else{
+							uni.showToast({
+								title:res.statusCode
+							})
+						}	
+					},
+					fail: (err) => {
+						console.log(err)
 						uni.showToast({
-							title: "发送成功"
+							title:'发送失败'
 						})
 					}
 				})
 			},
-<<<<<<< HEAD
-			// sendCode(){
-			// 	console.log(this.phone)
-			// 	uni.request({
-			// 		url:'http://mrbus.net:8888/api/user/smsCode'+'?phone='+this.phone,
-			// 		method:'POST',
-			// 		success: (res) => {
-			// 			console.log(res)
-			// 			if(res.statusCode==200){
-			// 				uni.showToast({
-			// 					title:'发送成功'
-			// 				})
-			// 			}else{
-			// 				uni.showToast({
-			// 					title:res.statusCode
-			// 				})
-			// 			}	
-			// 		},
-			// 		fail: (err) => {
-			// 			console.log(err)
-			// 			uni.showToast({
-			// 				title:'发送失败'
-			// 			})
-			// 		}
-			// 	})
-			// },
-=======
->>>>>>> 9b0e9ff1bd326e1b4ef54eb8af2d923b27dea173
 			register() {
 				/**
 				 * 客户端对账号信息进行一些必要的校验。
@@ -116,46 +96,6 @@
 					});
 					return;
 				}
-<<<<<<< HEAD
-				uni.request({
-					url:'http://mrbus.net:8888/api/user/register',
-					data:{
-						phone:this.phone,
-						password:this.password,
-						sms_code:this.sms_code
-					},
-					header:{
-						"content-type":"application/json"
-					},
-					method:'POST',
-					success: (res) => {
-						// console.log("注册成功")
-						console.log(res)
-						if(res.statusCode==200){
-							uni.showToast({
-								title: '注册成功'
-							});
-							uni.navigateTo({
-								url:'../login/login'
-							})
-						}else{
-							uni.showToast({
-								title:res.message
-							})
-						}
-					},
-					fail: (err) => {
-						console.log(err)
-						uni.showToast({
-							title:'注册失败'
-						})
-=======
-
-				const rdata = {
-					phone: this.phone,
-					password: this.password
-				}
-				console.log(rdata)
 				uni.request({
 					url:'http://mrbus.net:8888/api/user/register',
 					method: 'POST',
@@ -185,11 +125,10 @@
 						uni.showToast({
 							title: '注册失败'
 						});
->>>>>>> 9b0e9ff1bd326e1b4ef54eb8af2d923b27dea173
 					}
 				})
-		}
-	},
+			}
+		},
 	}
 </script>
 

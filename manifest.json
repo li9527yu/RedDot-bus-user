@@ -41,7 +41,9 @@
             },
             "ios" : {},
             /* ios打包配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "maps" : {}
+            }
         }
     },
     /* SDK配置 */
@@ -62,6 +64,9 @@
                     "key" : "BRNBZ-KY7Y4-FXYUP-X3KHF-XK5CT-FTBKZ"
                 }
             }
+        },
+        "router" : {
+            "mode" : "history"
         }
     }
 }

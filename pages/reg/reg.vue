@@ -44,7 +44,11 @@
 				confirmPassword: ''
 			}
 		},
+<<<<<<< HEAD
 		methods:{
+=======
+		methods: {
+>>>>>>> 9b0e9ff1bd326e1b4ef54eb8af2d923b27dea173
 			sendCode(){
 				console.log(this.phone)
 				uni.request({
@@ -58,6 +62,7 @@
 					}
 				})
 			},
+<<<<<<< HEAD
 			// sendCode(){
 			// 	console.log(this.phone)
 			// 	uni.request({
@@ -83,6 +88,8 @@
 			// 		}
 			// 	})
 			// },
+=======
+>>>>>>> 9b0e9ff1bd326e1b4ef54eb8af2d923b27dea173
 			register() {
 				/**
 				 * 客户端对账号信息进行一些必要的校验。
@@ -109,6 +116,7 @@
 					});
 					return;
 				}
+<<<<<<< HEAD
 				uni.request({
 					url:'http://mrbus.net:8888/api/user/register',
 					data:{
@@ -141,6 +149,43 @@
 						uni.showToast({
 							title:'注册失败'
 						})
+=======
+
+				const rdata = {
+					phone: this.phone,
+					password: this.password
+				}
+				console.log(rdata)
+				uni.request({
+					url:'http://mrbus.net:8888/api/user/register',
+					method: 'POST',
+					header: {
+						"content-type": "application/json "
+					},
+					data: {
+						  password: this.password,
+						  phone: this.phone,
+						  sms_code: this.sms_code
+					},
+					success: (res) => {
+						// console.log("注册成功")
+						uni.showToast({
+							title: '注册成功'
+						});
+						console.log(res.data)
+						// 获得token，以及username并存储在localstorage
+						// uni.setStorageSync('uniIdToken', )
+						// uni.setStorageSync('username', )
+						// uni.reLaunch({
+						// 	url:'../main/main'
+						// })
+						
+					},
+					fail: (err) => {
+						uni.showToast({
+							title: '注册失败'
+						});
+>>>>>>> 9b0e9ff1bd326e1b4ef54eb8af2d923b27dea173
 					}
 				})
 		}

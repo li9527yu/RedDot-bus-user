@@ -90,6 +90,13 @@
 			{
 				"navigationBarTitleText":"个人乘车"
 			}
+		},
+		{
+			"path":"pages/mapp/mapp",
+			"style":
+			{
+				"navigationBarTitleText":"选择位置"
+			}
 		}
     ],
 	"tabBar": {
@@ -125,20 +132,4 @@
 	}
 }
 
-// {
-// 	"pages": [{
-// 		"path": "pages/index/index",
-// 		"style": {
-// 			"navigationBarTitleText": "uni-app"
-// 		}
-// 	}],
-// 	"globalStyle": {
-// 		"navigationBarTextStyle": "black",
-// 		"navigationBarTitleText": "uni-app",
-// 		"navigationBarBackgroundColor": "#F8F8F8",
-// 		"backgroundColor": "#F8F8F8",
-// 		"app-plus": {
-// 			"background": "#efeff4"
-// 		}
-// 	}
-// }
+

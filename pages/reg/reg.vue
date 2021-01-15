@@ -2,9 +2,15 @@
 	<view class="content">
 		<view class="input-group">
 			<view class="input-row border">
-				<text class="title">账号：</text>
+				<text class="title">手机号：</text>
 				<!-- <m-input type="text" focus clearable v-model="username" placeholder="请输入账号"></m-input> -->
-				<uni-easyinput focus clearable v-model="username" placeholder="请输入账号" :inputBorder="false"></uni-easyinput>
+				<uni-easyinput focus clearable v-model="phone" placeholder="请输入手机号" :inputBorder="false"></uni-easyinput>
+			</view>
+			<view class="input-row border">
+				<text class="title">验证码：</text>
+				<!-- <m-input type="text" focus clearable v-model="username" placeholder="请输入账号"></m-input> -->
+				<uni-easyinput focus clearable v-model="sms_code" placeholder="请输入验证码" :inputBorder="false"></uni-easyinput>
+				<button type="default" @click="sendCode">发送验证码</button>
 			</view>
 			<view class="input-row border">
 				<text class="title">密码：</text>
@@ -32,18 +38,57 @@
 		// },
 		data() {
 			return {
-				username: '',
+				phone: '',
 				password: '',
+				sms_code:'',
 				confirmPassword: ''
 			}
 		},
-		methods: {
+		methods:{
+			sendCode(){
+				console.log(this.phone)
+				uni.request({
+					url:'http://mrbus.net:8888/api/user/smsCode'+'?phone='+this.phone,
+					method:'POST',
+					success: (res) => {
+						console.log(res)
+						uni.showToast({
+							title: "发送成功"
+						})
+					}
+				})
+			},
+			// sendCode(){
+			// 	console.log(this.phone)
+			// 	uni.request({
+			// 		url:'http://mrbus.net:8888/api/user/smsCode'+'?phone='+this.phone,
+			// 		method:'POST',
+			// 		success: (res) => {
+			// 			console.log(res)
+			// 			if(res.statusCode==200){
+			// 				uni.showToast({
+			// 					title:'发送成功'
+			// 				})
+			// 			}else{
+			// 				uni.showToast({
+			// 					title:res.statusCode
+			// 				})
+			// 			}	
+			// 		},
+			// 		fail: (err) => {
+			// 			console.log(err)
+			// 			uni.showToast({
+			// 				title:'发送失败'
+			// 			})
+			// 		}
+			// 	})
+			// },
 			register() {
 				/**
 				 * 客户端对账号信息进行一些必要的校验。
 				 * 实际开发中，根据业务需要进行处理，这里仅做示例。
 				 */
-				if (this.username.length < 3) {
+				if (this.phone.length < 3) {
 					uni.showToast({
 						icon: 'none',
 						title: '账号最短为 3 个字符'
@@ -64,71 +109,49 @@
 					});
 					return;
 				}
-
-				const rdata = {
-					username: this.username,
-					password: this.password
-				}
-				console.log(rdata)
 				uni.request({
-					url:'',
-					data:rdata,
+					url:'http://mrbus.net:8888/api/user/register',
+					data:{
+						phone:this.phone,
+						password:this.password,
+						sms_code:this.sms_code
+					},
+					header:{
+						"content-type":"application/json"
+					},
+					method:'POST',
 					success: (res) => {
 						// console.log("注册成功")
-						uni.showToast({
-							title: '注册成功'
-						});
-						console.log(res.data)
-						// 获得token，以及username并存储在localstorage
-						// uni.setStorageSync('uniIdToken', )
-						// uni.setStorageSync('username', )
-						uni.reLaunch({
-							url:'../main/main'
-						})
-						
+						console.log(res)
+						if(res.statusCode==200){
+							uni.showToast({
+								title: '注册成功'
+							});
+							uni.navigateTo({
+								url:'../login/login'
+							})
+						}else{
+							uni.showToast({
+								title:res.message
+							})
+						}
 					},
 					fail: (err) => {
-						
+						console.log(err)
+						uni.showToast({
+							title:'注册失败'
+						})
 					}
 				})
-			// 	uniCloud.callFunction({
-			// 		name: 'user-center',
-			// 		data: {
-			// 			action: 'register',
-			// 			params: data
-			// 		},
-			// 		success(e) {
-			// 			console.log("注册成功", e);
-
-			// 			if (e.result.code === 0) {
-			// 				uni.showToast({
-			// 					title: '注册成功'
-			// 				});
-			// 				uni.setStorageSync('uniIdToken', e.result.token)
-			// 				uni.setStorageSync('username', e.result.username)
-			// 				uni.reLaunch({
-			// 					url: '../main/main',
-			// 				});
-			// 			} else {
-			// 				uni.showModal({
-			// 					content: JSON.stringify(e.result),
-			// 					showCancel: false
-			// 				})
-			// 			}
-			// 		},
-			// 		fail(e) {
-			// 			uni.showModal({
-			// 				content: JSON.stringify(e),
-			// 				showCancel: false
-			// 			})
-			// 		}
-			// 	})
-			// }
 		}
 	},
 	}
 </script>
 
 <style>
-
+#send_sms{
+	background-color: #0faeff;
+	color: #0faeff;
+	
+}
 </style>

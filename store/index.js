@@ -11,19 +11,31 @@ const store = new Vuex.Store({
 		forcedLogin: false,
 		hasLogin: false,
 		userName: "",
-		usertoken:""
+		usertoken:"",
+		userId:""
 	},
 	mutations: {
 		login(state, user) {
-			uni.setStorageSync('user_token',user.token)
-			uni.setStorageSync('username', user.userName)
 			state.userName = user.userName || '新用户';
-			state.usertoken=user.token;
+			state.usertoken=user.token || '';
+			state.userId=user.id || '';
 			state.hasLogin = true;
+			uni.setStorage({
+				key:'userinfo',
+				data:user
+			})
+			// uni.setStorageSync('user_token',user.token)
+			// uni.setStorageSync('username', user.userName)
+			
 		},
 		logout(state) {
-			state.userName = "";
+			state.userName =' ';
+			state.usertoken=' ';
+			state.userId=' ';
 			state.hasLogin = false;
+			uni.removeStorage({
+				key:'userInfo'
+			})
 		}
 	}
 })

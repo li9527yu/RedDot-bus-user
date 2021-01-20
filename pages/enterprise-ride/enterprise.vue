@@ -8,9 +8,9 @@
 						<biaofun-datetime-picker
 							id="datechoose"
 							placeholder="请选择活动时间"
-							defaultValue="2020-12-08 10:30"
-							start="2000-12-03 02:08"
-							end="2021-10-28 22:58"
+							defaultValue="2021-1-08 10:30"
+							start="2020-12-03 02:08"
+							end="2025-11-28 22:58"
 							fields="minute"
 							@change="changeDatetimePicker"
 						></biaofun-datetime-picker>
@@ -50,6 +50,8 @@
 
 <script>
 	import biaofunDatetimePicker from '../../components/biaofun-datetime-picker/biaofun-datetime-picker.vue'
+	var util = require('../../common/util.js');
+	var formatLocation = util.formatLocation;
 	export default{
 		name:'Person',
 		components:{
@@ -61,90 +63,17 @@
 				title:'个人乘车',
 				slocation:'',
 				elocation:'',
-				timeValue: ''
+				timeValue: '',
+				longitude_start:'',
+				latitude_start:'',
+				longitude_end:'',
+				latitude_end:''
 				},
 			   hasLocation: false,
-			   location: {},
+			   location_start: {},
+			   location_end:{},
 			   locationAddress: ''
 			}
-		},
-		onShow() {
-			// let that=this;
-			// uni.getStorage({
-			// 	key:"start_item",
-			// 	success(res) {
-			// 		that.submitForm.slocation=res.data
-			// 		// that.$forceUpdate()
-			// 		console.log(res.data)
-			// 	},
-			// 	fail(err) {
-			// 		console.log(err.data)
-			// 	}
-			// })
-			// uni.removeStorage({
-			//     key: 'start_item',
-			//     success: function (res) {
-			//         console.log('success');
-			//     }
-			// });
-			// uni.getStorage({
-			// 	key:"end_item",
-			// 	success(res) {
-			// 		that.submitForm.elocation=res.data
-			// 		// that.$forceUpdate()
-			// 		console.log(res.data)
-			// 	},
-			// 	fail(err) {
-			// 		console.log(err.data)
-			// 	}
-			// })
-			// uni.removeStorage({
-			//     key: 'end_item',
-			//     success: function (res) {
-			//         console.log('success');
-			//     }
-			// });
-			// // console.log()
-			// console.log(this.submitForm)
-		},
-		onLoad() {
-			let that=this;
-			uni.getStorage({
-				key:"start_item",
-				success(res) {
-					that.submitForm.slocation=res.data
-					// that.$forceUpdate()
-					console.log(res.data)
-				},
-				fail(err) {
-					console.log(err.data)
-				}
-			})
-			uni.removeStorage({
-			    key: 'start_item',
-			    success: function (res) {
-			        console.log('success');
-			    }
-			});
-			uni.getStorage({
-				key:"end_item",
-				success(res) {
-					that.submitForm.elocation=res.data
-					// that.$forceUpdate()
-					console.log(res.data)
-				},
-				fail(err) {
-					console.log(err.data)
-				}
-			})
-			uni.removeStorage({
-			    key: 'end_item',
-			    success: function (res) {
-			        console.log('success');
-			    }
-			});
-			// console.log()
-			console.log(this.submitForm)
 		},
 		methods:{
 			changeDatetimePicker(date) {
@@ -156,18 +85,22 @@
 				let that=this;
 				var submitForm=JSON.stringify(that.submitForm);
 				console.log(this.submitForm);
-				// if(this.submitForm.elocation&&this.submitForm.slocation&&this.submitForm.timeValue){
+				if(this.submitForm.elocation&&this.submitForm.slocation&&this.submitForm.timeValue){
 					uni.navigateTo({
 						url:'/pages/payment/payment?submitData='+submitForm
 					})
 					// uni.redirectTo({
 					// 	url:'../payment/payment'
 					// })
-				// }
-				// else{
-				// 	// this.ConfirmOR=true;
-				// 	console.log("err");
-				// }
+				}
+				else{
+					// this.ConfirmOR=true;
+					uni.showToast({
+						icon:'none',
+						title:'请您填写完整信息！'
+					})
+					console.log("err");
+				}
 				// uni.navigateTo({
 				// 	url:'../payment/payment'
 				// })
@@ -178,8 +111,13 @@
 					success: (res) => {
 						this.submitForm.slocation=res.address
 						console.log(res.address)
-							// this.location = formatLocation(res.longitude, res.latitude),
+						this.location_start = formatLocation(res.longitude, res.latitude)
+						this.submitForm.longitude_start='E:'+this.location_start.longitude[0]+'°'+this.location_start.longitude[1]+'′'
+						console.log(this.submitForm.longitude_start)
+						this.submitForm.latitude_start='N:'+this.location_start.latitude[0]+'°'+this.location_start.latitude[1]+'′'
+						console.log(this.submitForm.latitude_start)
 							// this.locationAddress = res.address
+							// {{location.longitude[0]}}°{{location.longitude[1]}}
 					}
 				})
 			},
@@ -188,8 +126,14 @@
 					success: (res) => {
 						this.submitForm.elocation=res.address
 						console.log(res.address)
-							// this.location = formatLocation(res.longitude, res.latitude),
+						// console.log(res)
+						this.location_end = formatLocation(res.longitude, res.latitude)
+						this.submitForm.longitude_end='E:'+this.location_end.longitude[0]+'°'+this.location_end.longitude[1]+'′'
+						console.log(this.submitForm.longitude_end)
+						this.submitForm.latitude_end='N:'+this.location_end.latitude[0]+'°'+this.location_end.latitude[1]+'′'
+						console.log(this.submitForm.latitude_end)
 							// this.locationAddress = res.address
+						
 					}
 				})
 			},

@@ -6,9 +6,17 @@
 
 	export default {
 		onLaunch: function() {
-			let uniIdToken = uni.getStorageSync('uniIdToken')
-			if (uniIdToken) {
-				this.login(uni.getStorageSync('username'))
+			let userInfo =uni.getStorageInfoSync('userInfo')||'';
+			if(userInfo.id){
+				//更新登录状态
+				uni.getStorage({
+					key:'userInfo',
+					success: (res) => {
+						// this.login(res.data)
+						this.$store.commit('login',res.data)
+						console.log(res.data)
+					}
+				})
 			}
 			console.log('App Launch');
 		},
@@ -25,10 +33,6 @@
 </script>
 
 <style >
-	/* 头条小程序需要把 iconfont 样式放到组件外 */
-	/* @import "components/m-icon/m-icon.css" */;
-	 /* @import "/wxcomponents/vant/dist/common/index.wxss"; */
-	/*每个页面公共css */
 	page {
 		min-height: 100%;
 		display: flex;

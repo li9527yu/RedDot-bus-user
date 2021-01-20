@@ -43,7 +43,7 @@
 			} else {
 				this.guideToLogin()
 			}
-			console.log(this.$store.state.usertoken)
+			// console.log(this.$store.state.usertoken)
 		},
 		
 		methods: {

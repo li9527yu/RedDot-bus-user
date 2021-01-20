@@ -25,57 +25,26 @@
 				</view>
 				<!-- <view class="value"><span></span></view> -->
 			</view>			
-			<!-- <van-cell-group class="detail-context">
-			  <van-cell title="用车时间 :" :value="acceptData.time"   />
-			  <van-cell title="出发点 :" :value="acceptData.start" left-icon="location-o"/>
-			  <van-cell title="目的地 :" :value="acceptData.end" left-icon="location-o"  />
-			  <van-cell title="选择车型" value="" is-link />			  
-			</van-cell-group> -->
-			<!-- <uni-forms-item label="用车时间:">
-				<uni-easyinput :value="acceptData.time" disabled></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item label="出发点:">
-				<uni-easyinput :value="acceptData.start" disabled></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item label="目的地:">
-				<uni-easyinput :value="acceptData.end" disabled></uni-easyinput>
-			</uni-forms-item> -->
 		</view>
 		<view class="userdetail">
 			<uni-forms border>
-				<uni-forms-item label="包车人:">
-					<uni-easyinput :value="acceptData.username" placeholder="请输入名字"class="user" ></uni-easyinput>
+				<uni-forms-item label="联系人:">
+					<uni-easyinput :value="acceptData.username" v-model="acceptData.username" placeholder="请输入名字"class="user" ></uni-easyinput>
 				</uni-forms-item>
-				<uni-forms-item label="手机号:">
-					<uni-easyinput :value="acceptData.phone" placeholder="请输入手机号" class="user" ></uni-easyinput>
+				<uni-forms-item label="联系人手机号:">
+					<uni-easyinput :value="acceptData.phone" v-model="acceptData.phone" placeholder="请输入手机号" class="user" ></uni-easyinput>
 				</uni-forms-item>
 				<uni-collapse>
 					<uni-collapse-item title="备注" showAnimation>
-						<uni-easyinput placeholder="您的备注	" autoHeight type="textarea" :value="acceptData.note" v-model="acceptData.note"></uni-easyinput>
+						<uni-easyinput placeholder="您的备注	" v-model="acceptData.note" autoHeight type="textarea" :value="acceptData.note"></uni-easyinput>
 					</uni-collapse-item>
 				</uni-collapse>
 			</uni-forms>
-<!-- 			<van-cell-group>
-			  <van-field
-			    :value="username"
-			    label="包车人"
-			    placeholder="请输入名字"
-				class="user"
-			  />
-			  <van-field
-			    :value="phone"
-			    label="手机号"
-			    placeholder="请输入手机号"
-				class="user"
-			  />
-			</van-cell-group> -->
 		</view>
 		<view class="confirmPay">
-			<span class="money">金额：{{acceptData.money}}</span>
+			<!-- <span class="money">金额：{{acceptData.money}}</span> -->
 			<button class="confirmTo" @click="payFor">确认支付</button>
-			<!-- <button class="payto">确认支付</button> -->
-			<!-- <van-cell title="金额 :" value="" class="money"/>
-			<van-button type="primary" size="large" class="confirmTo"  color="#0faeff">确认支付</van-button> -->
+			
 		</view>
 	</view>
 </template>
@@ -94,7 +63,13 @@
 					note:'',
 					money:'',
 					chooseCar:'',
-					carNum:''
+					carNum:'',
+					longitude_start:'',
+					latitude_start:'',
+					longitude_end:'',
+					latitude_end:'',
+					userId:this.$store.state.userId,
+					token:this.$store.state.usertoken
 				},
 				cars: [
 					["请选择车型",'奔驰', '大众', '本田', '马自达'],
@@ -102,41 +77,96 @@
 				],
 				index1: 0,
 				index2:0,
+				// CarMoney:['奔驰', '大众', '本田', '马自达'],
+				// 		 [186,987,256,432,218]
 				
 			}
 		},
 		onLoad(options) {
-			var data=JSON.parse(options.submitData)
-			this.acceptData.time=data.timeValue;
-			this.acceptData.start=data.slocation;
-			this.acceptData.end=data.elocation;
-			this.acceptData.title=data.title;
+			if(options.submitData==null)
+			{
+				options.submitData='';
+			}
+			else{
+				var data=JSON.parse(options.submitData)
+				this.acceptData.time=data.timeValue;
+				this.acceptData.start=data.slocation;
+				this.acceptData.end=data.elocation;
+				this.acceptData.title=data.title;
+				this.acceptData.longitude_start=data.longitude_start
+				this.acceptData.longitude_end=data.longitude_end
+				this.acceptData.latitude_start=data.latitude_start
+				this.acceptData.latitude_end=data.latitude_end
+			}
+			
 		},
 		methods:{
 		 carsChange: function(e) {
 			            // console.log(e)
+						var CarMoney=new Map([['大众',188],['奔驰',298],['本田',318],['马自达',138]])
+						// console.log(CarMoney.get('大众'))
 						this.index1=e.detail.value[0]
 						this.index2=e.detail.value[1]
 						this.acceptData.chooseCar=this.cars[0][this.index1]
 						this.acceptData.carNum=this.cars[1][this.index2]
-						// console.log(this.acceptData.chooseCar+':'+this.acceptData.carNum)
+						let car=this.acceptData.chooseCar; let num=this.acceptData.carNum
+						console.log(car.toString()=='大众')
+						// console.log(CarMoney.get(car.toString())=="大众")
+						this.acceptData.money='￥'+CarMoney.get(car.toString())*num;
+						// console.log(this.acceptData.money)	
 			        },
 			payFor(){
-				// let that=this
-				// var acceptData=JSON.stringify(that.acceptData)
-				
-				// uni.request({
-				// 	url:'',
-				// 	data:{
-						
-				// 	},
-				// 	header:{
-						
-				// 	},
-				// 	success:(res)=> {
-				// 		console.log(res.data)
-				// 	}
-				// })
+				// console.log(this.acceptData.username+' '+this.acceptData.phone)
+				if(!(this.acceptData.username&&this.acceptData.phone))
+				{
+					uni.showToast({
+						icon:'none',
+						title:'请填写联系人和手机号！'
+					})
+					return;
+				}
+				else
+				{
+					var phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/;  
+					if(!phoneReg.test(this.acceptData.phone))
+					{
+						uni.showToast({
+							icon:'none',
+							title:'请填写正确手机号！'
+						})
+					}
+				}
+				if(typeof this.acceptData.note == "undefined" || this.acceptData.note == null || this.acceptData.note == "")
+				{
+					this.acceptData.note="无"
+				}
+				console.log(this.acceptData.note)
+				// console.log(typeof str)
+				uni.request({
+					url:'http://mrbus.net:8888/api/order/create/enterprise',
+					header:{
+						"Content-Type": "application/json",
+						"token":this.acceptData.token
+					},
+					method:'POST',
+					data:{
+						  "end_point":this.acceptData.longitude_end+','+this.acceptData.latitude_end,
+						  "enterprise_admin_phone":this.acceptData.phone,  
+						  "remark":this.acceptData.note,
+						  "required_bus":this.acceptData.chooseCar+' '+this.acceptData.carNum,
+						  "start_date": this.acceptData.time+':00',
+						  "start_point": this.acceptData.longitude_start+','+this.acceptData.latitude_start,
+						  "user_name":this.acceptData.username,
+						  "user_phone":this.acceptData.phone,
+						  // "longitude_start":this.acceptData.longitude_start,
+						  // "latitude_start":this.acceptData.latitude_start,
+						  // "longitude_end":this.acceptData.longitude_end,
+						  // "latitude_end":this.acceptData.latitude_end
+					},
+					success:(res)=> {
+						console.log(res.data)
+					}
+				})
 			}
 		}
 	}
@@ -187,6 +217,7 @@
 		background-color: #007AFF;
 	} */
 	.confirmPay{
+		height: 7%;
 		position: fixed;
 		bottom: 0;
 		left: 0;
@@ -194,27 +225,24 @@
 		
 		display:flex;
 	}
-	.money,.confirmTo{
-		/* display: flex; */
+	
+	.confirmTo{
 		flex: 1;
-		width: 50%;
+		width: 100%;
 		margin: 0;
 		padding: 0;
-		
+		font-weight: 300;
+		font-size: 18px;
+		color: #FFFFFF;
+		background-color: #007AFF;
 	}
-	.money{
-		font-size: 20px;
+	/* .money{
+		font-size: 18px;
 		font-weight: 300;
 		padding: 5px;
 		border: 1px #C0C4CC solid;
 		border-radius: 5px;
-	}
-	.confirmTo{
-		font-weight: 300;
-		color: #FFFFFF;
-		background-color: #007AFF;
-		/* border: 1px #2C405A solid; */
-	}
+	} */
 	.userdetail{
 		margin: 10px 0 0;
 	}

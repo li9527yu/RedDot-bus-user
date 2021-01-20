@@ -80,11 +80,12 @@
 							// uni.setStorageSync('username', this.phone)
 							this.$store.commit('login',{
 								userName:this.phone,
-								token:res.data.data.token
+								token:res.data.data.token,
+								id:res.data.data.user.id
 							})
 							uni.reLaunch({
-								// url:'../main/main'
-								url:'../user/user'
+								url:'../main/main'
+								// url:'../user/user'
 							})
 						}else{
 							uni.showToast({

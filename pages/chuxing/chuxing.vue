@@ -50,17 +50,20 @@
 					     iconPath: '../../static/img/location.png' 
 					},{
 					     latitude: 23.088888,
-					     longitude: 113.20000,
+					     longitude: 113.320000,
 					     iconPath: '../../static/img/location.png'
 					}],
 					polyline: [{
 						points: [
-						   {latitude: 23.099994,longitude: 113.324520}, 				
-						   {latitude: 23.088888,longitude: 113.20000}
+						   {latitude: 23.099994,longitude: 113.324520},
+						   {latitude: 23.099004,longitude: 113.320020},
+						   {latitude: 23.088888,longitude: 113.32000}
 						],
 						width: 10,
 						color: "#00aaff",
-						dottedLine: false,
+						dottedLine: true,
+						arrowLine:true,
+						arrowIconPath:'../../static/img/sinaweibo.png'
 					}],
 					//二维码
 					ifShow: true,

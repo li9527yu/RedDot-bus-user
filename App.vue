@@ -1,3 +1,4 @@
+<!-- <script type="text/javascript" src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=l7n0ORx7O050a7IHaZPZs5piwKTpYM7o"></script> -->
 <script >
 	import {
 		mapState,
@@ -33,18 +34,19 @@
 </script>
 
 <style >
+	 /* #ifndef APP-PLUS-NVUE */
 	page {
 		min-height: 100%;
 		display: flex;
 		font-size: 14px;
 	}
-
+	
 	input,
 	textarea,
 	button {
 		font-size: 14px;
 	}
-
+	 /* #endif*/
 	/* #ifdef MP-BAIDU */
 	page {
 		width: 100%;
@@ -75,13 +77,14 @@
 	/* #endif */
 
 	/* 原生组件模式下需要注意组件外部样式 */
-	m-input {
+	/* m-input {
 		width: 100%;
-		/* min-height: 100%; */
+		
 		display: flex;
 		flex: 1;
 	}
-
+ */
+	 /* #ifndef APP-PLUS-NVUE */
 	.content {
 		display: flex;
 		flex: 1;
@@ -115,7 +118,9 @@
 		left: 0;
 		height: 1px;
 		content: '';
+		 /* #ifndef APP-PLUS-NVUE */
 		-webkit-transform: scaleY(.5);
+		 /* #endif*/
 		transform: scaleY(.5);
 		background-color: #c8c7cc;
 	}
@@ -153,4 +158,5 @@
 	button.primary {
 		background-color: #0faeff;
 	}
+	 /* #endif*/
 </style>

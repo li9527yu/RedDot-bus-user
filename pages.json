@@ -58,7 +58,8 @@
             
         }
         ,{
-            "path" : "pages/chuxing/chuxing",
+            // "path" : "pages/chuxing/chuxing",
+			"path":"pages/chuxing/mymap2",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "乘车",
@@ -97,6 +98,13 @@
 			{
 				"navigationBarTitleText":"选择位置"
 			}
+		},
+		{
+			"path":"pages/chuxing/RoutePlan",
+			"style":
+			{
+				"navigationBarTitleText":"地图路线"
+			}
 		}
     ],
 	"tabBar": {
@@ -114,7 +122,8 @@
 			"iconPath": "static/img/user.png",
 			"selectedIconPath": "static/img/userHL.png"
 		}, {
-			"pagePath": "pages/chuxing/chuxing",
+			// "pagePath": "pages/chuxing/chuxing",
+			"pagePath":"pages/chuxing/mymap2",
 			"text": "乘车",
 			"iconPath": "static/img/user.png",
 			"selectedIconPath": "static/img/userHL.png"
@@ -123,7 +132,14 @@
 			"text": "我的",
 			"iconPath": "static/img/user.png",
 			"selectedIconPath": "static/img/userHL.png"
-		}]
+		}
+		// {
+		// 	"pagePath":"pages/chuxing/RoutePlan",
+		// 	"text":"地图路线",
+		// 	"iconPath":"./static/img/user.png",
+		// 	"selectedIconPath":"static/img/userHL.png"
+		// },
+		]
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

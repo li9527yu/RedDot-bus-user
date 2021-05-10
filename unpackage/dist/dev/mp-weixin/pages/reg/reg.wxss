@@ -1,0 +1,12 @@
+
+#send_sms{
+	background-color: #0faeff;
+	color: #0faeff;
+}
+.send-code-btn {
+	width: 120px;
+	text-align: center;
+	background-color: #0FAEFF;
+	color: #FFFFFF;
+}
+

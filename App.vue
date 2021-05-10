@@ -1,4 +1,3 @@
-<!-- <script type="text/javascript" src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=l7n0ORx7O050a7IHaZPZs5piwKTpYM7o"></script> -->
 <script >
 	import {
 		mapState,
@@ -7,18 +6,16 @@
 
 	export default {
 		onLaunch: function() {
-			let userInfo =uni.getStorageInfoSync('userInfo')||'';
-			if(userInfo.id){
-				//更新登录状态
 				uni.getStorage({
 					key:'userInfo',
-					success: (res) => {
-						// this.login(res.data)
-						this.$store.commit('login',res.data)
+					success: (res) => {						
+						this.login(res.data)						
 						console.log(res.data)
+					},
+					fail: (err) => {
+						console.log(err)
 					}
 				})
-			}
 			console.log('App Launch');
 		},
 		onShow: function() {
@@ -28,7 +25,7 @@
 			// console.log('App Hide');
 		},
 		methods: {
-			...mapMutations(['login']),
+			...mapMutations(['login','StaffCertify']),
 		}
 	}
 </script>
@@ -77,13 +74,8 @@
 	/* #endif */
 
 	/* 原生组件模式下需要注意组件外部样式 */
-	/* m-input {
-		width: 100%;
-		
-		display: flex;
-		flex: 1;
-	}
- */
+	
+
 	 /* #ifndef APP-PLUS-NVUE */
 	.content {
 		display: flex;
@@ -92,11 +84,20 @@
 		background-color: #efeff4;
 		padding: 10px;
 	}
-
+	
+	.m-input {
+		border: 1px solid #FFFFFF;
+		border-radius: 10px;
+		flex: 1;
+		height: 40px;
+		min-height: 40px;
+		font-size: 16px;
+	}
 	.input-group {
-		background-color: #ffffff;
+		background-color: #efeff4;
 		margin-top: 20px;
 		position: relative;
+		/* border-radius: 20px; */
 	}
 
 	.input-group::before {
@@ -108,7 +109,7 @@
 		content: '';
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
-		background-color: #c8c7cc;
+		background-color: #efeff4;
 	}
 
 	.input-group::after {
@@ -122,19 +123,27 @@
 		-webkit-transform: scaleY(.5);
 		 /* #endif*/
 		transform: scaleY(.5);
-		background-color: #c8c7cc;
+		background-color: #efeff4;
 	}
 
 	.input-row {
+		/* width: 95vw; */
 		display: flex;
 		flex-direction: row;
 		position: relative;
+		padding:1px 2px;
 		/* font-size: 18px; */
+		margin-top: 10px;
 		line-height: 40px;
+		border: 1px solid #e4e5ea;
+		border-radius: 10px;
+		background-color: #FFFFFF;
 	}
 
-	.input-row .title {
-		width: 70px;
+	.title {
+		/* width: 60px; */
+		height: 40px;
+		font-size: 16px;
 		padding-left: 15px;
 	}
 
@@ -152,10 +161,12 @@
 
 	.btn-row {
 		margin-top: 25px;
-		padding: 10px;
+		padding: 5px;
 	}
 
 	button.primary {
+		width: 90%;
+		font-size: 16px;
 		background-color: #0faeff;
 	}
 	 /* #endif*/

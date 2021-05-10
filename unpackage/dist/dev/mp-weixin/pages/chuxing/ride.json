@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "超级巴士",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "tki-qrcode": "/components/tki-qrcode/tki-qrcode",
+    "my-map": "/pages/map/mymap2",
+    "line-list": "/pages/fixedRoute/LineList",
+    "qr-code": "/pages/function/qrcode"
+  }
+}

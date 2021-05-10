@@ -1,0 +1,1 @@
+<view class="Mapcontent"><view class="pageMap"><map class="mymap2 vue-ref" id="Emap" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{covers}}" data-ref="Emap"></map></view></view>

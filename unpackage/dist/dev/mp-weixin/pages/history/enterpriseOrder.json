@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "超级巴士",
+  "usingComponents": {
+    "order-list": "/pages/orderList/orderList"
+  }
+}

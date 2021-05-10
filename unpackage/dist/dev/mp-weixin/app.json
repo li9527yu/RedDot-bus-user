@@ -1,0 +1,65 @@
+{
+  "pages": [
+    "pages/main/main",
+    "pages/enterprise-ride/enterprise",
+    "pages/login/login",
+    "pages/reg/reg",
+    "pages/pwd/pwd",
+    "pages/user/user",
+    "pages/chuxing/ride",
+    "pages/payment/payment",
+    "pages/function/qrcode",
+    "pages/userInfo/PerfectInfo",
+    "pages/userInfo/StaffInfo",
+    "pages/userInfo/principal",
+    "pages/map/mymap2",
+    "pages/userInfo/changePwd",
+    "pages/userInfo/hisOrder",
+    "pages/fixedRoute/FixedLine",
+    "pages/fixedRoute/LineList",
+    "pages/history/historyRecord",
+    "pages/history/enterpriseOrder",
+    "pages/mynews/newsList",
+    "pages/mynews/newsItem",
+    "pages/mynews/orderNews",
+    "pages/function/note",
+    "pages/payment/OrderDetail",
+    "pages/map/EnterpriseMap",
+    "pages/Digitalcharter/digital",
+    "pages/payment/orderByDigital",
+    "pages/payment/pay"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#0faeff",
+    "backgroundColor": "#fbf9fe"
+  },
+  "tabBar": {
+    "color": "#7a7e83",
+    "selectedColor": "#0faeff",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "text": "首页",
+        "iconPath": "static/img/Home.png",
+        "selectedIconPath": "static/img/selectedHome.png"
+      },
+      {
+        "pagePath": "pages/chuxing/ride",
+        "text": "乘车",
+        "iconPath": "static/img/car.png",
+        "selectedIconPath": "static/img/carSeleceted.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "static/img/Person.png",
+        "selectedIconPath": "static/img/PersonSelected.png"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}

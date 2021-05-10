@@ -1,0 +1,1 @@
+<view class="Mapcontent"><view class="pageMap"><map class="mymap2 vue-ref" id="allmap" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{covers}}" polyline="{{ployline}}" data-ref="allmap"></map></view></view>

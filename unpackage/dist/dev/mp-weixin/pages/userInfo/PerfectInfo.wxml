@@ -1,0 +1,1 @@
+<view class="container"><view class="hisOrder"><uni-list vue-id="02506708-1" bind:__l="__l" vue-slots="{{['default']}}"><uni-list-item vue-id="{{('02506708-2')+','+('02506708-1')}}" showExtraIcon="{{true}}" extraIcon="{{people}}" link="{{true}}" to="../userInfo/StaffInfo" title="员工信息完善" bind:__l="__l"></uni-list-item></uni-list></view></view>

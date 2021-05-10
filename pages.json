@@ -1,144 +1,196 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页,
 		{
-			"path": "pages/main/main",
+			"path":"pages/main/main",
+			"style":
+			{
+				"navigationBarTitleText":"超级巴士"
+			}
+		},
+		{
+			"path": "pages/enterprise-ride/enterprise",
 			"style": {
 				"navigationBarTitleText": "超级班车"
 			}
-		}, {
+		}
+		, {
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "登录"
+				"navigationBarTitleText": "超级巴士"
 			}
 		}, {
 			"path": "pages/reg/reg",
 			"style": {
-				"navigationBarTitleText": "注册"
+				"navigationBarTitleText": "超级巴士"
 			}
 		}, {
 			"path": "pages/pwd/pwd",
 			"style": {
-				"navigationBarTitleText": "找回密码"
+				"navigationBarTitleText": "超级巴士"
 			}
 		}, {
 			"path": "pages/user/user",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationBarTitleText": "超级巴士"
 			}
 		}
-		// #ifdef APP-PLUS
-		, {
-			"path": "pages/invite/invite",
-			"style": {
-				"navigationBarTitleText": "邀请好友"
-			}
-		}
-		// #endif
-		, {
-			"path": "pages/invited-user/invited-user",
-			"style": {
-				"navigationBarTitleText": "受邀用户"
-			}
-		}
-		// #ifdef H5
-		, {
-			"path": "pages/invite-reg/invite-reg",
-			"style": {
-				"navigationBarTitleText": "邀请注册页面",
-				"navigationStyle": "custom"
-			}
-		}
-		// #endif
-	    ,{
-            "path" : "pages/explorer/explorer",
-            "style" : {
-                "enablePullDownRefresh": true,
-                "navigationBarTitleText": "发现"
-            }
-            
-        }
-        ,{
-            // "path" : "pages/chuxing/chuxing",
-			"path":"pages/chuxing/mymap2",
+		,
+		{
+			"path":"pages/chuxing/ride",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "乘车",
-                "enablePullDownRefresh": false
+                "navigationBarTitleText": "超级巴士",
+                "enablePullDownRefresh": true
             }
             
         },
 		{
-            "path" : "pages/show-map/ShowMap",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "选择位置"
-                
-            }
-            
-        },
-		{
-		    "path" : "pages/payment/payment",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "确认支付"
-		        
-		    }
-		    
-		},
-		{
-			"path":"pages/person-ride/person",
+			"path":"pages/function/qrcode",
 			"style":
 			{
-				"navigationBarTitleText":"个人乘车"
+				"navigationBarTitleText":"超级巴士"
 			}
 		},
 		{
-			"path":"pages/mapp/mapp",
+			"path":"pages/userInfo/StaffInfo",
 			"style":
 			{
-				"navigationBarTitleText":"选择位置"
+				"navigationBarTitleText":"超级巴士"
 			}
 		},
 		{
-			"path":"pages/chuxing/RoutePlan",
+			"path":"pages/map/mymap2",
 			"style":
 			{
-				"navigationBarTitleText":"地图路线"
+				"navigationBarTitleText":"超级巴士"
 			}
+		},
+		{
+			"path":"pages/userInfo/changePwd",
+			"style":{
+				"navigationBarTitleText":"超级巴士"
+			}
+		},
+		{
+			"path":"pages/userInfo/hisOrder",
+			"style":{
+				"navigationBarTitleText":"超级巴士",
+				"enablePullDownRefresh":true
+			}
+		},
+		{
+			"path":"pages/fixedRoute/FixedLine",
+			"style":{
+				"navigationBarTitleText":"超级巴士"
+			}
+		},
+		{
+			"path":"pages/fixedRoute/LineList",
+			"style":{
+				"navigationBarTitleText":"超级巴士",
+				"enablePullDownRefresh":true
+			}
+		},
+		{
+			"path":"pages/history/historyRecord",
+			"style":{
+				"navigationBarTitleText":"超级巴士"
+			}
+		},
+		{
+			"path":"pages/history/enterpriseOrder",
+			"style":{
+				"navigationBarTitleText":"超级巴士"	
+			}
+		},
+		// {
+		// 	"path":"pages/mynews/newsList",
+		// 	"style":{
+		// 		"navigationBarTitleText":"超级巴士"
+		// 	}
+		// },
+		// {
+		// 	"path":"pages/mynews/newsItem",
+		// 	"style":{
+		// 		"navigationBarTitleText":"超级巴士"	
+		// 	}
+		// },
+		// {
+		// 	"path":"pages/mynews/orderNews",
+		// 	"style":{
+		// 		"navigationBarTitleText":"超级巴士"
+		// 	}
+		// },
+		{
+			"path":"pages/function/note",
+			"style":{
+				"navigationBarTitleText":"超级巴士",
+				"navigationStyle":"custom"
+				
+			}
+		},
+		{
+			"path":"pages/payment/OrderDetail",
+			"style":{
+				"navigationBarTitleText":"超级巴士"
+			}
+		},
+		{
+				"path":"pages/map/EnterpriseMap",
+				"style":{
+					"navigationBarTitleText":"超级巴士"
+				}
+		},
+		{
+				"path":"pages/Digitalcharter/digital",
+				"style":{
+					"navigationBarTitleText":"超级巴士"
+				}
+		},
+		{
+				"path":"pages/payment/orderByDigital",
+				"style":{
+					"navigationBarTitleText":"确认订单"
+				}
+		},
+		{
+				"path":"pages/payment/pay",
+				"style":{
+					"navigationBarTitleText":"支付订单"
+				}
+		},
+		{
+				"path":"pages/history/personOrder",
+				"style":{
+					"navigationBarTitleText":"数字订单"
+				}
 		}
+		
+		
     ],
 	"tabBar": {
 		"color": "#7a7e83",
 		"selectedColor": "#0faeff",
 		"backgroundColor": "#ffffff",
-		"list": [{
-			"pagePath": "pages/main/main",
-			"text": "首页",
-			"iconPath": "static/img/home.png",
-			"selectedIconPath": "static/img/homeHL.png"
-		}, {
-			"pagePath": "pages/explorer/explorer",
-			"text": "发现",
-			"iconPath": "static/img/user.png",
-			"selectedIconPath": "static/img/userHL.png"
-		}, {
-			// "pagePath": "pages/chuxing/chuxing",
-			"pagePath":"pages/chuxing/mymap2",
-			"text": "乘车",
-			"iconPath": "static/img/user.png",
-			"selectedIconPath": "static/img/userHL.png"
-		}, {
-			"pagePath": "pages/user/user",
-			"text": "我的",
-			"iconPath": "static/img/user.png",
-			"selectedIconPath": "static/img/userHL.png"
-		}
-		// {
-		// 	"pagePath":"pages/chuxing/RoutePlan",
-		// 	"text":"地图路线",
-		// 	"iconPath":"./static/img/user.png",
-		// 	"selectedIconPath":"static/img/userHL.png"
-		// },
+		"list": [
+			{
+				"pagePath": "pages/main/main",
+				"text": "首页",
+				"iconPath": "static/img/Home.png",
+				"selectedIconPath": "static/img/selectedHome.png"
+			}, 
+			{
+				"pagePath": "pages/chuxing/ride",
+				"text": "乘车",
+				"iconPath": "static/img/car.png",
+				"selectedIconPath": "static/img/carSeleceted.png"
+			}, 
+			{
+				"pagePath": "pages/user/user",
+				"text": "我的",
+				"iconPath": "static/img/Person.png",
+				"selectedIconPath": "static/img/PersonSelected.png"
+			}	
 		]
 	},
 	"globalStyle": {

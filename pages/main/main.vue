@@ -1,19 +1,30 @@
 <template>
 	<view class="content">
-		<view class="end-title">
-		     <view v-for="(item,index) in items" :key="index" :class="{btna:count == index}" @tap="change(index)">
-		       <span class="item-title">{{item}}</span>
-		    </view>
-		</view>
-		<view class="end-cont" :class="{ dis: btnnum == 0 }"><person></person></view>
-		<view class="end-cont" :class="{ dis: btnnum == 1 }"><enterprise></enterprise></view>
-<!-- 		<view class="end-cont" :class="{ dis: btnnum == 2 }"><child3></child3></view> -->
+		<view>
+			<view class="end-title">
+			     <view class="titleItem" v-for="(item,index) in items" :key="index"  @tap="change(index)">
+					  <view :class="{btna:count == index}">
+						   <text class="item-title">{{item}}</text>
+					  </view>  
+			    </view>
+			</view>
+			<view class="MainContent">
+				<view class="end-cont"  v-if="!btnnum">
+					<enterprise></enterprise>
+				</view>
+				<view class="end-cont"  v-else>
+					<digital></digital>
+				</view>
+			</view>
+	</view>
 	</view>
 </template>
 
 <script>
 	import Person from '../person-ride/person.vue'
 	import Enterprise from '../enterprise-ride/enterprise.vue'
+	import FixedLine from '../fixedRoute/FixedLine.vue'
+	import Digital from '../Digitalcharter/digital.vue'
 	import {
 		mapState,
 		mapMutations
@@ -22,28 +33,24 @@
 	export default {
 		components:{
 			Person,
-			Enterprise
+			Enterprise,
+			FixedLine,
+			Digital
 		},
 		data(){
 			return {
 			      btnnum: 0,
-			      items:["个人乘车","企业乘车","其他方式"],
+			      // items:["固定路线","个人乘车","企业乘车"],
+				   items:["企业乘车","数字包车"],
 			      count:"",
 			  }
 		},
-		// computed:{
-		// 	getToken(){
-		// 		return this.$store.state.usertoken
-		// 	}
-		// },
+		computed:{
+			...mapState(['userId','hasLogin','forcedLogin','IsPrincipal'])
+		},
+		
 		onLoad() {
-			let user_token=this.$store.state.usertoken
-			if (user_token) {
-				
-			} else {
-				this.guideToLogin()
-			}
-			// console.log(this.$store.state.usertoken)
+		
 		},
 		
 		methods: {
@@ -85,31 +92,11 @@
 </script>
 
 <style>
-	.hello {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-	}
-
-	.title {
-		color: #8f8f94;
-		margin-top: 25px;
-	}
-
-	.ul {
-		font-size: 15px;
-		color: #8f8f94;
-		margin-top: 25px;
-	}
-
-	.ul>view {
-		line-height: 25px;
-	}
 	.item-title{
-		font-size: 16px;
+		font-size: 32rpx;
+		font-weight: 300;
+		color: #000000;
 		/* font-weight: 400; */
-
-		
 	}
 	.content{
 		padding: 0;
@@ -117,22 +104,29 @@
 		background-color: #FFFFFF;
 	}
 	.end-title{
-	        display: flex;
-			margin: 10px 0px  0px;
-			
-	    }
-	.end-title view{
-		flex-grow: 1;
+		display: flex;
+		padding: 20rpx;
+		flex-direction: row;
+		/* padding: 20rpx 0 20rpx; */
+		/* background-color:rgb(15, 174, 255) ; */
+		/* border-radius: 0 0 40rpx 40rpx; */
+		border-bottom: 1px solid #F5F5F5;
+   }
+	.titleItem{
+		flex: 1;
+		/* flex-grow: 1; */
 		text-align: center;
 	}
-	.end-cont{
-		display: none;
-		margin-top:10px ;
+	.MainContent{
+		position: relative;
+		/* margin-top: -20rpx; */
+		background-color: #FFFFFF;
+		margin-top: 20rpx;
 	}
-	.btna{
+	.btna text{
 		font-weight: 600;
-		padding-bottom: 5px;
-		border-bottom: 2px #007AFF solid;
+		padding-bottom: 10rpx;
+		border-bottom: 2px #000000 solid;
 	}
 	.dis{
 		display: block;

@@ -1,0 +1,280 @@
+<template>
+	<view class="Mapcontent">
+		<view class="pageMap">
+			<map
+			id="Emap"
+			ref="Emap"
+			class="mymap2"
+			:latitude="latitude"
+			:longitude="longitude"
+			:markers="covers"
+			></map>
+		</view>
+	</view>
+</template>
+<script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex'
+	export default{
+		data(){
+			return{
+				latitude:'',
+				longitude:'',
+				covers:[
+					{
+						latitude:36,
+						longitude:110,
+						iconPath:'../../static/img/location.png',
+						width:30,
+						height:30
+					}
+				],	
+				socketTask: null,
+				is_open_socket: false,
+				timer:null,
+			
+			}
+		},
+		computed:{
+			...mapState(['userId','hasLogin','forcedLogin','isClose'])
+		},
+		created() {
+			this.handleNotice()
+			this.getLocation()
+			if(this.hasLogin){
+				this.connectSocketInit()
+			}
+		},
+		onShow() {					
+			this.getLocation()		
+		},
+		onLoad(option) {
+			// console.log(option.orderId)
+			this.getLocation()
+			
+		},
+		onReady() {
+			this.map=uni.createMapContext("Emap",this)
+		},
+		beforeDestroy() {
+			if(this.hasLogin)
+			{
+				this.closeSocket()
+			}
+		},
+		methods:{
+			handleNotice(e){
+				let system = uni.getSystemInfoSync();// 获取系统信息
+				// console.log(JSON.stringify(system));
+				if (system.platform === 'android') { // 判断平台
+					var context = plus.android.importClass("android.content.Context");
+					var locationManager = plus.android.importClass("android.location.LocationManager");
+					var main = plus.android.runtimeMainActivity();
+					var mainSvr = main.getSystemService(context.LOCATION_SERVICE);
+					if (!mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER)) {
+						uni.showModal({
+							title: '提示',
+							content: '请打开定位服务功能',
+							showCancel: false, // 不显示取消按钮
+							success() {
+								if (!mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER)) {
+									var Intent = plus.android.importClass('android.content.Intent');
+									var Settings = plus.android.importClass('android.provider.Settings');
+									var intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS); 
+									main.startActivity(intent); // 打开系统设置GPS服务页面
+								} else {
+									console.log('GPS功能已开启');
+								}
+							}
+						});
+					}
+				} 
+				// uni.navigateTo({
+				// 		url: './../tabBar-3/notice/notice_list?type=1&userId='+_self.userInfo.userId
+				// });
+			},
+			getLocation(){
+				// if(this.timer==null)
+				// {
+					var that=this;
+					// this.timer=setInterval(function(){
+						uni.getLocation({
+							type:'gcj02',
+							success: (res) => {
+								// console.log('success')
+								that.covers=[
+									{
+										latitude:res.latitude,
+										longitude:res.longitude,
+										iconPath:'../../static/img/location.png',
+										width:50,
+										height:50
+									}
+								]
+								// console.log(`center lat:${that.latitude},lon:${that.longitude}`)
+								that.latitude=res.latitude
+								that.longitude=res.longitude
+								// console.log(`lon:${res.longitude},lat:${res.latitude}`)
+							},
+							fail: (err) => {
+								console.log(JSON.stringify(err))
+							}
+						})
+				// 	},1000)
+				// }
+				
+			},
+			handle(des_lat,des_lon,coverId){
+				console.log("mpove")
+				this.map.translateMarker({
+					markerId:coverId,
+					destination:{
+						// latitude:25.500404,
+						// longitude:119.794946,
+						latitude:des_lat,
+						longitude:des_lon
+					},
+					duration:2000					
+				},ret=>{
+					console.log(JSON.stringify(ret))
+				})
+			},
+			connectSocketInit() {
+				var that=this;
+				console.log(that.userId)
+				// 创建一个this.socketTask对象【发送、接收、关闭socket都由这个对象操作】
+				this.socketTask = uni.connectSocket({
+					// 【非常重要】必须确保你的服务器是成功的,如果是手机测试千万别使用ws://127.0.0.1:9099【特别容易犯的错误】
+					url: "ws://mrbus.net:8888/api/map/user/order/"+that.userId,
+					success(data) {
+						console.log("websocket连接成功");
+					},
+				});
+ 
+				// 消息的发送和接收必须在正常连接打开中,才能发送或接收【否则会失败】
+				this.socketTask.onOpen((res) => {
+					console.log("WebSocket连接正常打开中...！");
+					that.is_open_socket = true;
+						// if(that.num==1){
+							uni.showToast({
+								title:'连接成功！',
+								mask:true,
+								image:'../../static/img/success.png',
+								icon: 'none',
+							})
+							// this.$store.commit('changeNum')
+						// }
+						
+					// 注：只有连接正常打开中 ，才能正常成功发送消息
+					// 注：只有连接正常打开中 ，才能正常收到消息
+						this.socketTask.onMessage((res) => {
+							// console.log(JSON.parse(res.data))
+							var objs=JSON.parse(res.data);
+							// console.log(objs)
+							setTimeout(function(){
+								that.getLocation2()
+							},2000)
+							var testMakers=[
+								{
+									id:999,
+									latitude:that.latitude,
+									longitude:that.longitude,
+									iconPath:'../../static/img/location.png',
+									width:30,
+									height:30
+								}
+							];
+							
+								objs.forEach(function(item,index){
+									
+									
+									// console.log(item)
+									// console.log(obj)
+									// console.log(`lon:${that.longitude},lat${that.latitude}`)
+									// console.log(`item_x:${item.x},item_y:${item.y}index:${index}`)
+									var test={};
+									if(item==null)
+									{
+										console.log('null')										
+										test.id=999;
+										test.latitude=that.latitude;
+										test.longitude=that.longitude;
+										test.iconPath='../../static/img/location.png';
+										test.width=30;
+										test.height=30;
+									}
+									else{
+										var obj=JSON.parse(item);
+										test.id=index;
+										test.latitude=obj.y;
+										test.longitude=obj.x;
+										test.iconPath='../../static/img/busOrder.png';
+										test.width=30;
+										test.height=30;
+										test.alpha=0.5;
+									}
+									
+									// console.log(test)
+									testMakers.push(test);
+								})
+							
+							that.covers=testMakers;
+							console.log(that.covers)
+					})
+				})
+				// 这里仅是事件监听【如果socket关闭了会执行】
+				this.socketTask.onClose(() => {
+					console.log("已经被关闭了")
+				})
+			},
+			// 关闭websocket【离开这个页面的时候执行关闭】
+			closeSocket() {
+				var that=this;
+				this.socketTask.close({
+					success(res) {
+						that.is_open_socket = false;
+						console.log("关闭成功", res)
+					},
+					fail(err) {
+						console.log("关闭失败", err)
+					}
+				})
+			},
+			getLocation2(){
+				var that=this;
+				// this.timer=setInterval(function(){
+					uni.getLocation({
+						type:'gcj02',
+						success: (res) => {
+							that.latitude=res.latitude
+							that.longitude=res.longitude
+						},
+						fail: (err) => {
+							console.log(JSON.stringify(err))
+						}
+					})
+			}
+						
+		}
+	}
+</script>
+<style>
+	.Mapcontent{
+		width: 750rpx;
+		height: 1500rpx;
+	}
+	.pageMap{
+		width:750rpx;
+		height: 1500rpx;
+		
+	}
+	.mymap2{
+		width:750rpx; 
+		height: 1500rpx;
+		
+		flex: 1;
+	}
+	
+</style>

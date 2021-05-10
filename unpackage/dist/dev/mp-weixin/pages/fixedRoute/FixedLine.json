@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "超级巴士",
+  "usingComponents": {
+    "line-list": "/pages/fixedRoute/LineList",
+    "my-map": "/pages/map/mymap2"
+  }
+}

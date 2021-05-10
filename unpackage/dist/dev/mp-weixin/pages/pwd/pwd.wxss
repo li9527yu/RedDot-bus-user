@@ -1,0 +1,44 @@
+
+.stepIn{
+	background-color: #efeff4
+}
+.login-type {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
+.login-type-btn {
+	line-height: 30px;
+	margin: 0px 15px;
+}
+.login-type-btn.act {
+	color: #0FAEFF;
+	border-bottom: solid 1px #0FAEFF;
+}
+.send-code-btn {
+	width: 120px;
+	text-align: center;
+	background-color: #0FAEFF;
+	color: #FFFFFF;
+	border-radius: 5px;
+}
+.action-row {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
+.primary{
+	color: #FFFFFF;
+}
+
+

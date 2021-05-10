@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "超级巴士",
+  "usingComponents": {
+    "person": "/pages/person-ride/person",
+    "enterprise": "/pages/enterprise-ride/enterprise",
+    "fixed-line": "/pages/fixedRoute/FixedLine",
+    "digital": "/pages/Digitalcharter/digital"
+  }
+}

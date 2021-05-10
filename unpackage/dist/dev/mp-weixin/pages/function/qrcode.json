@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "超级巴士",
+  "usingComponents": {
+    "tki-qrcode": "/components/tki-qrcode/tki-qrcode"
+  }
+}

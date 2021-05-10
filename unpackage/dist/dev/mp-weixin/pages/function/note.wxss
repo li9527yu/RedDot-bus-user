@@ -1,0 +1,21 @@
+
+.container{
+	width: 100vw;
+}
+.navbar{
+	width: 100%;
+}
+.noteBody{
+	padding: 3px;
+}
+.recommnedBody{
+	margin-top: 5px;
+}
+.recommendTitle{
+	font-size: 14px;
+	font-weight: 600;
+}
+.notechoose{
+	background-color: #FFFFFF;
+}
+
